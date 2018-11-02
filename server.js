@@ -33,9 +33,10 @@ io.on('connection', (socket) => {
   })
 
   socket.on('distribute', () => {
-    gm.distribute()
+    gm.distribute(null)
     let p = gm.playingPlayer
-    io.sockets.emit('msg', 'player' + p + ': ' + players[p].holdCard[1].name)
+    console.log('p: ', p)
+    io.sockets.emit('msg', 'player' + p + ': ' + gm.players[p].holdCard[1].name)
   })
 
   socket.on('req_to_everyone', (data) => { // socketに繋がってる全員
