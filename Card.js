@@ -4,3 +4,5 @@ class Card {
     this.name = name;
   }
 }
+
+module.exports = Card;
