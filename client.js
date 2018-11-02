@@ -9,6 +9,13 @@ $(function () {
       socket.emit('distribute', null)
     }
 
+    if(msg === 'choose 0'){
+      socket.emit('choose', 0)
+    }
+    if(msg === 'choose 1'){
+      socket.emit('choose', 1)
+    }
+
     $('#m').val('');
     return false;
   });
