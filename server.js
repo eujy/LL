@@ -6,8 +6,6 @@ const io = require('socket.io')(server)
 
 const GM = require("./GM")
 const gm = new GM()
-gm.init()
-let abc = gm.players[0]
 
 let err
 function withError (obj, err) {
@@ -25,12 +23,16 @@ io.on('connection', (socket) => {
     console.log(`${socket.id} disconnected`)
   })
 
-  socket.on('chat message', (data) => {
-    io.sockets.emit('chat message', data)
-  })
+  socket.on('start', () => {
+    gm.init()
+    let players = gm.players
+    for(let i in players){
+      console.log(players[i])
+      io.sockets.emit('msg', 'player' + i + ': ' + players[i].holdCard[0].name)
+    }
 
-  socket.on('check', () => {
-    io.sockets.emit('msg', abc.name)
+    // console.log(players[0])
+    // io.sockets.emit('msg', 'player' + 0 + ': ' + players[1].holdCard[1].name)
   })
 
   socket.on('req_to_everyone', (data) => { // socketに繋がってる全員

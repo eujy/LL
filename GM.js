@@ -162,19 +162,19 @@
 
 
 
-  const gm = new GM();
+  // const gm = new GM();
 
-  console.log(gm);
-  gm.init()
+  // console.log(gm);
+  // gm.init()
   // console.log(gm.players);
   // console.log(gm.yama);
-  console.log(gm);
-  gm.distribute(0)
-  console.log(gm.players[0]);
-  gm.choose(0,0)
-  gm.startTurn()
-  gm.endTurn(0,0,0)
-  console.log(gm.players[0]);
+  // console.log(gm);
+  // gm.distribute(0)
+  // console.log(gm.players[0]);
+  // gm.choose(0,0)
+  // gm.startTurn()
+  // gm.endTurn(0,0,0)
+  // console.log(gm.players[0]);
 
 
   module.exports = GM;
