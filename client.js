@@ -5,6 +5,9 @@ $(function () {
     if(msg === "start"){
       socket.emit('start', null)
     }
+    if(msg === "distribute"){
+      socket.emit('distribute', null)
+    }
 
     $('#m').val('');
     return false;
