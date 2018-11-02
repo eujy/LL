@@ -4,7 +4,10 @@ const server = require('http').createServer((req, res) => {
 })
 const io = require('socket.io')(server)
 
-const gm = require("./GM")
+const GM = require("./GM")
+const gm = new GM()
+gm.init()
+let abc = gm.players[0]
 
 let err
 function withError (obj, err) {
@@ -20,6 +23,14 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`)
+  })
+
+  socket.on('chat message', (data) => {
+    io.sockets.emit('chat message', data)
+  })
+
+  socket.on('check', () => {
+    io.sockets.emit('msg', abc.name)
   })
 
   socket.on('req_to_everyone', (data) => { // socketに繋がってる全員
