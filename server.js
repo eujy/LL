@@ -33,18 +33,17 @@ io.on('connection', (socket) => {
   })
 
   socket.on('distribute', () => {
-    gm.distribute(null)
+    let card = gm.distribute(null)
     let p = gm.playingPlayer
     console.log('p: ', p)
     io.sockets.emit('msg', 'player' + p + ': ' + gm.players[p].holdCard[1].name)
   })
 
-  socket.on('choose 0', () => {
-
-  })
-
-  socket.on('choose 1', () => {
-    
+  socket.on('choose', (num) => {
+    gm.choose(gm.playingPlayer, num)
+    let p = gm.playingPlayer
+    console.log('p: ', p)
+    io.sockets.emit('msg', 'player' + p + ': choose ' + card)
   })
 
   socket.on('req_to_everyone', (data) => { // socketに繋がってる全員
