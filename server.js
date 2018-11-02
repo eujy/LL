@@ -34,10 +34,11 @@ io.on('connection', (socket) => {
           let cards = players[i].holdCard
           io.sockets.emit('msg', `player${i} has ${cards.length} cards`)
           for(let j in cards){
-            io.sockets.emit('msg', `${j+1}: cards[j].name`)
+            let n = j+1
+            io.sockets.emit('msg', `${n}: ${cards[j].name}`)
           }
         }
-      phase++
+      phase = 1
       io.sockets.emit('msg', `player${gm.playingPlayer}'s turn`)
       io.sockets.emit('msg', 'draw a card?')
       return
@@ -49,10 +50,10 @@ io.on('connection', (socket) => {
           let cards = players[i].holdCard
           io.sockets.emit('msg', `player${i} has ${cards.length} cards`)
           for(let j in cards){
-            io.sockets.emit('msg', `${j+1}: cards[j].name`)
+            io.sockets.emit('msg', `${j.int + 1}: ${cards[j].name}`)
           }
         }
-      phase++
+      phase = 2
       io.sockets.emit('msg', 'which do you play? 1or2')
       return
     }
@@ -63,27 +64,59 @@ io.on('connection', (socket) => {
         tempCard = gm.choose(gm.playingPlayer, 1)
       }
       io.sockets.emit('msg', `play ${tempCard}`)
+      let players = gm.players
+      let ps = ''
       switch(tempCard){
         case "Heisi":
         case "Doke":
-        case "Kisi":
+        case "Kishi":
         case "Shogun":
+          phase = 3
+          for(let i in players){
+            if(i === gm.playingPlayer){
+              continue
+            }
+            ps += `${i} `
+          }
+          io.sockets.emit('msg', `to whom? ${ps}`)
+          break
         case "Majutusi":
           phase = 3
+          for(let i in players){
+            ps += `${i} `
+          }
+          io.sockets.emit('msg', `to whom? ${ps}`)
           break
         default:
-          phase = 1
+          phase = 5
+          gm.endTurn(tempCard, null, null)
+          //TODO ターン終了処理？
+
       }
       return
     }
-    if(phase === 3){
-      if(tempCard === "Majutusi"){
-
-      } else {
-
+    let tempToWhom
+    if(phase === 3){ // ask to whom
+      if(tempCard !== "Majutusi"){
+        if(msg === gm.playingPlayer){
+          return
+        }
+      }
+      for(let i in gm.players){
+        if(msg === i){
+          tempToWhom = i
+          if(tempCard === "Heisi"){
+            phase = 4
+            io.sockets.emit('msg', `which card?`)
+            return
+          }
+          phase = 5
+          gm.endTurn(tempCard, tempToWhom, null)
+          //TODO ターン終了処理？
+        }
       }
     }
-
+    //TODO ゲーム終了処理
 
   })
 
