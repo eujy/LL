@@ -4,6 +4,8 @@ const server = require('http').createServer((req, res) => {
 })
 const io = require('socket.io')(server)
 
+const gm = require("./GM")
+
 let err
 function withError (obj, err) {
   return {
