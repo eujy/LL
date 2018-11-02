@@ -15,6 +15,9 @@ $(function () {
     if(msg === 'choose 1'){
       socket.emit('choose', 1)
     }
+    if(msg === 'startTurn'){
+      socket.emit('startTurn', null)
+    }
 
     $('#m').val('');
     return false;

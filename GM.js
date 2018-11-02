@@ -36,12 +36,12 @@ class GM {
 constructor() {
   this.yama = [];
   this.players = [];
-  this.ba = [];
   this.isFinished = false;
   this.playingPlayer = 0;
 }
 
 init(){
+  this.players =[]
   this.players.push(new player("N"))
   this.players.push(new player("R"))
   shuffle(cards)
