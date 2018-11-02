@@ -23,14 +23,68 @@ io.on('connection', (socket) => {
     console.log(`${socket.id} disconnected`)
   })
 
-  socket.on('start', () => {
-    gm.init()
-    let players = gm.players
-    for(let i in players){
-      for(let j in players[i].holdCard){
-        io.sockets.emit('msg', 'player' + i + ': ' + players[i].holdCard[j].name)
+  io.sockets.emit('msg', 'ready?')
+  let phase = 0;// 0->init, 1->draw, 2->choose, 3->to whom, 4->which card, 5->end, 6->finish
+  let tempCard = null
+  socket.on('message', (msg) => {
+    if(phase === 0 && msg === "y"){ // init game
+        gm.init()
+        let players = gm.players
+        for(let i in players){
+          let cards = players[i].holdCard
+          io.sockets.emit('msg', `player${i} has ${cards.length} cards`)
+          for(let j in cards){
+            io.sockets.emit('msg', `${j+1}: cards[j].name`)
+          }
+        }
+      phase++
+      io.sockets.emit('msg', `player${gm.playingPlayer}'s turn`)
+      io.sockets.emit('msg', 'draw a card?')
+      return
+    }
+    if(phase === 1 && msg === "y"){ // draw phase
+        gm.startTurn()
+        let players = gm.players
+        for(let i in players){
+          let cards = players[i].holdCard
+          io.sockets.emit('msg', `player${i} has ${cards.length} cards`)
+          for(let j in cards){
+            io.sockets.emit('msg', `${j+1}: cards[j].name`)
+          }
+        }
+      phase++
+      io.sockets.emit('msg', 'which do you play? 1or2')
+      return
+    }
+    if(phase === 2){ // choose phase
+      if(msg === "1"){
+        tempCard = gm.choose(gm.playingPlayer, 0)
+      } else if (msg === "2"){
+        tempCard = gm.choose(gm.playingPlayer, 1)
+      }
+      io.sockets.emit('msg', `play ${tempCard}`)
+      switch(tempCard){
+        case "Heisi":
+        case "Doke":
+        case "Kisi":
+        case "Shogun":
+        case "Majutusi":
+          phase = 3
+          break
+        default:
+          phase = 1
+      }
+      return
+    }
+    if(phase === 3){
+      if(tempCard === "Majutusi"){
+
+      } else {
+
       }
     }
+
+
   })
 
   socket.on('startTurn', () => {
