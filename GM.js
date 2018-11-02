@@ -175,3 +175,6 @@
   gm.startTurn()
   gm.endTurn(0,0,0)
   console.log(gm.players[0]);
+
+
+  module.exports = GM;
