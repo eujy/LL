@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
     }
   })
 
-  sockete.on('startTurn', () => {
+  socket.on('startTurn', () => {
     io.sockets.emit('msg', 'startTurn')
     gm.startTurn()
     let players = gm.players
