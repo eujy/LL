@@ -64,7 +64,7 @@ distribute(player){
 choose(player,chosenCard){
   this.players[player].trshCard.push(this.players[player].holdCard[chosenCard])
   this.players[player].holdCard.splice(chosenCard,1)
-
+  return this.players[player].holdCard[chosenCard].name
 }
 
 startTurn(){
@@ -179,5 +179,5 @@ return array;
 // gm.endTurn(0,0,0)
 // console.log(gm.players[0]);
 //
-// 
+//
  module.exports = GM;
