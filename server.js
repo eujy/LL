@@ -39,6 +39,14 @@ io.on('connection', (socket) => {
     io.sockets.emit('msg', 'player' + p + ': ' + gm.players[p].holdCard[1].name)
   })
 
+  socket.on('choose 0', () => {
+
+  })
+
+  socket.on('choose 1', () => {
+    
+  })
+
   socket.on('req_to_everyone', (data) => { // socketに繋がってる全員
     console.log('to_everyone', data)
     io.sockets.emit('to_everyone', data)
