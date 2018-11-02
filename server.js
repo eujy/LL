@@ -27,8 +27,20 @@ io.on('connection', (socket) => {
     gm.init()
     let players = gm.players
     for(let i in players){
-      console.log(players[i])
-      io.sockets.emit('msg', 'player' + i + ': ' + players[i].holdCard[0].name)
+      for(let j in players[i].holdCard){
+        io.sockets.emit('msg', 'player' + i + ': ' + players[i].holdCard[j].name)
+      }
+    }
+  })
+
+  sockete.on('startTurn', () => {
+    io.sockets.emit('msg', 'startTurn')
+    gm.startTurn()
+    let players = gm.players
+    for(let i in players){
+      for(let j in players[i].holdCard){
+        io.sockets.emit('msg', 'player' + i + ': ' + players[i].holdCard[j].name)
+      }
     }
   })
 
