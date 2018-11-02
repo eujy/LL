@@ -33,14 +33,14 @@ io.on('connection', (socket) => {
   })
 
   socket.on('distribute', () => {
-    let card = gm.distribute(null)
+    gm.distribute(null)
     let p = gm.playingPlayer
     console.log('p: ', p)
     io.sockets.emit('msg', 'player' + p + ': ' + gm.players[p].holdCard[1].name)
   })
 
   socket.on('choose', (num) => {
-    gm.choose(gm.playingPlayer, num)
+    let card = gm.choose(gm.playingPlayer, num)
     let p = gm.playingPlayer
     console.log('p: ', p)
     io.sockets.emit('msg', 'player' + p + ': choose ' + card)
