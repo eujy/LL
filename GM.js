@@ -64,7 +64,7 @@ distribute(player){
 choose(player,chosenCard){
   this.players[player].trshCard.push(this.players[player].holdCard[chosenCard])
   this.players[player].holdCard.splice(chosenCard,1)
-  return this.players[player].holdCard[chosenCard].name
+  return this.players[player].trshCard[0].name
 }
 
 startTurn(){
