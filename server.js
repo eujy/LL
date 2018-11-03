@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
         case "Shogun":
           phase = 'askToWhom'
           for(let i in players){
-            if(i === gm.playingPlayer){
+            if(i === gm.playingPlayer){ //TODOここ入ってないかも。
               continue
             }
             ps += `${i} `
@@ -91,6 +91,7 @@ io.on('connection', (socket) => {
         default:
           phase = 'endTurn'
           gm.endTurn(tempCard, null, null)
+          tempCard = null
           //TODO ターン終了処理？
 
       }
@@ -114,15 +115,26 @@ io.on('connection', (socket) => {
           }
           phase = 'endTurn'
           gm.endTurn(tempCard, tempToWhom, null)
+          tempCard = null
+          tempToWhom = null
           //TODO ターン終了処理？
         }
       }
     }
 
-    if(phase === 4){ // only for Heisi
-      if(msg === 3){
-
+    if(phase === 'askWhichCard'){ // only for Heisi
+      let chosenCard = null
+      for(let i in gm.cardList){
+        if(msg === i){
+          chosenCard = gm.cardList[i]
+          break
+        }
       }
+      phase = 'endTurn'
+      gm.endTurn(tempCard, tempToWhom, chosenCard)
+      tempCard = null
+      tempToWhom = null
+      chosenCard = null
     }
     //TODO ゲーム終了処理
 
