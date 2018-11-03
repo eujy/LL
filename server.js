@@ -140,6 +140,14 @@ io.on('connection', (socket) => {
 
   })
 
+  socket.on('display', () => {
+    io.sockets.emit('display', {
+      players: gm.players,
+      yama: gm.yama,
+    })
+    console.log('display all')
+  })
+
   socket.on('startTurn', () => {
     io.sockets.emit('msg', 'startTurn')
     gm.startTurn()

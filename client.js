@@ -3,6 +3,10 @@ $(function () {
   $('form').submit(function(){
     let msg = $('#m').val()
 
+    if(msg === 'display'){
+      $('#m').val('');
+      return false;
+    }
     socket.emit('message', msg)
 
     $('#m').val('');
