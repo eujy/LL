@@ -30,4 +30,8 @@ $(function () {
       $(`#--ここをidに変える--`).append($('p').text(card.name))
     }
   })
+
+  socket.on('call display', (gm) => {
+    socket.emit('display', null)
+  })
 });
