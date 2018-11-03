@@ -6,14 +6,14 @@ class CardEffects extends GameMethods {
   constructor(){
     super()
     this.cardsInfo = [
-      {"card": new Card(1, "Heisi"), "howmany": 5},
-      {"card": new Card(2, "Doke"), "howmany": 2},
-      {"card": new Card(3, "Kishi"), "howmany": 2},
-      {"card": new Card(4, "Soryo"), "howmany": 2},
-      {"card": new Card(5, "Majutusi"), "howmany": 2},
-      {"card": new Card(6, "Shogun"), "howmany": 1},
-      {"card": new Card(7, "Daijin"), "howmany": 1},
-      {"card": new Card(8, "Hime"), "howmany": 1},
+      {"card": new Card(1, "Heisi"), "howmany": 5, "action": ["whom","card"]},
+      {"card": new Card(2, "Doke"), "howmany": 2, "action": ["whom"]},
+      {"card": new Card(3, "Kishi"), "howmany": 2, "action": ["whom"]},
+      {"card": new Card(4, "Soryo"), "howmany": 2, "action": null},
+      {"card": new Card(5, "Majutusi"), "howmany": 2, "action": ["whom"]},
+      {"card": new Card(6, "Shogun"), "howmany": 1, "action": ["whom"]},
+      {"card": new Card(7, "Daijin"), "howmany": 1, "action": null},
+      {"card": new Card(8, "Hime"), "howmany": 1, "action": null},
     ]
   }
 
@@ -25,38 +25,50 @@ class CardEffects extends GameMethods {
     }
   }
 
-  doCard(card,player,chosenCard,me){
+  nextAction(card){
+    for(let cardInfo of this.cardsInfo){
+      if(card === cardInfo.card.name){
+        return cardInfo.action
+      }
+    }
+  }
+
+  getCardList(){
+    return this.cardsInfo.map(cardInfo => cardInfo.card.name)
+  }
+
+  doCard(playedCard,whom,chosenCard,me){
     if(card === "Heisi"){//対象プレイヤーとカードを選び、当たっていたら対象プレイヤーは脱落
-      if(this.players[player].holdCard[0].name === chosenCard){
-        this.players[player].lose()
+      if(this.players[whom].holdCard[0].name === chosenCard){
+        this.players[whom].lose()
       }
       return
     }
-    if(card === "Doke"){//対象プレイヤーの手札を見る
-      return this.players[player].holdCard[0];
+    if(playedCard === "Doke"){//対象プレイヤーの手札を見る
+      return this.players[whom].holdCard[0];
     }
-    if(card === "Kishi"){//対象プレイヤーとカードの強さを比較して弱かったほうが脱落
-      if(this.players[player].holdCard[0].power > this.players[me].holdCard[0].power){
+    if(playedCard === "Kishi"){//対象プレイヤーとカードの強さを比較して弱かったほうが脱落
+      if(this.players[whom].holdCard[0].power > this.players[me].holdCard[0].power){
         this.players[me].lose()
-      }else if(this.players[player].holdCard[0].power < this.players[me].holdCard[0].power){
-        this.players[player].lose()
+      }else if(this.players[whom].holdCard[0].power < this.players[me].holdCard[0].power){
+        this.players[whom].lose()
       }else{
 
       }
       return
     }
-    if(card === "Soryo"){
+    if(playedCard === "Soryo"){
       this.player[me].isProtected = true
       return
     }
-    if(card === "Majutusi"){
-      this.players[player].trshCard.push(this.players[player].holdCard[0])
-      this.distribute(player)
+    if(playedCard === "Majutusi"){
+      this.players[whom].trshCard.push(this.players[whom].holdCard[0])
+      this.distribute(whom)
       return
     }
-    if(card === "Shogun"){
-      this.players[player].holdCard.push(this.players[me].holdCard[0])
-      this.players[me].holdCard.push(this.players[player].holdCard[0])
+    if(playedCard === "Shogun"){
+      this.players[whom].holdCard.push(this.players[me].holdCard[0])
+      this.players[me].holdCard.push(this.players[whom].holdCard[0])
       return
     }
   }
