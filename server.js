@@ -92,6 +92,7 @@ io.on('connection', (socket) => {
           phase = 'endTurn'
           gm.endTurn(tempCard, null, null)
           tempCard = null
+          io.sockets.emit('call display', null)
           //TODO ターン終了処理？
 
       }
@@ -117,6 +118,7 @@ io.on('connection', (socket) => {
           gm.endTurn(tempCard, tempToWhom, null)
           tempCard = null
           tempToWhom = null
+          io.sockets.emit('call display', null)
           //TODO ターン終了処理？
         }
       }
@@ -135,6 +137,7 @@ io.on('connection', (socket) => {
       tempCard = null
       tempToWhom = null
       chosenCard = null
+      io.sockets.emit('call display', null)
     }
     //TODO ゲーム終了処理
 
