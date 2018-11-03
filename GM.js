@@ -35,6 +35,7 @@ class GM {
     this.players = [];
     this.isFinished = false;
     this.playingPlayer = 0;
+    this.winner = null
     this.cardList = ["Heisi","Doke","Kishi","Soryo","Majutusi","Shogun","Daijin","Hime"]
   }
 
@@ -150,7 +151,12 @@ class GM {
   }
 
   gameFinished(){
-
+    this.isFinished = true
+    for(let player of this.players){
+      if(player.isAlive){
+        this.winner = player.name
+      }
+    }
   }
 }
 

@@ -139,18 +139,26 @@ io.on('connection', (socket) => {
       chosenCard = null
       io.sockets.emit('call display', null)
     }
-    //TODO ゲーム終了処理
 
+    if(phase === 'endTurn' && msg === 'y'){
+      if(gm.isFinished){
+        phase = 'finishGame'
+        io.sockets.emit('msg', `winner: ${gm.winner}`)
+      }
+    }
+
+    if(phase === 'finishGame'){ //TODO ゲーム終了処理
+
+    }
   })
 
   socket.on('display', () => {
+    console.log('display all')
     let msg = {
       players: gm.players,
       yama: gm.yama,
     }
     io.sockets.emit('display', msg)
-    console.log('display all')
-    console.log(msg)
   })
 
   socket.on('startTurn', () => {
