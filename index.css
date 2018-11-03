@@ -48,6 +48,7 @@ html,body{
 }
 
 .shita-box{
+  top: 50%;
   down: 0;
   background: #cccccc;
   color: #ffffff;
