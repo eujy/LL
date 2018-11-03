@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
   io.sockets.emit('init', gm)
 
   io.sockets.on('game start', () => {
+    console.log('game start')
     gm.init()
     gm.startTurn()
     if(gm.isFinished){
@@ -36,6 +37,7 @@ io.on('connection', (socket) => {
   })
 
   io.sockets.on('select', (data) => {
+    console.log('select', data)
     gm.endTurn(data.playedCard, data.whom, data.chosenCard)
     gm.startTurn()
     io.sockets.emit('on game', gm)

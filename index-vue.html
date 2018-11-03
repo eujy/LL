@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>Socket.IO chat</title>
+  <link rel="stylesheet" href="./index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <meta charset="utf-8"/>
+</head>
+<body>
+  
+  <div class="split-boxtate ue-box">
+    <div class="split-box left-box">
+      <div id="wrap">
+        <div id="yama">yama: {{ message }}</div>
+        <div>
+          <div id="myTrsh"><p>myTrsh: {{ cards }}</p></div>
+          <div id="p1Trsh"><p>p1Trsh: {{ cards }}</p></div>
+        </div>
+        <div>
+          <div id="myHold"><p>myHold: {{ cards }}</p></div>
+          <!-- <div id="p1hold"><p>p1hold</p></div> -->
+        </div>
+        <ul id="messages"></ul>
+      </div>
+    </div>
+
+    <div class="split-box right-box">
+      <p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p><p>test</p>
+    </div>
+  </div>
+
+  <div class="split-boxtate shita-box">
+    <p>
+      <div id="message">ここにメッセージが表示されます</div>
+    </p>
+    <div id="buttonField">
+      <button id="b-one" v-on:click="click1">{{ num }}</button>
+      <button id="b-two" v-on:click="click2">2</button>
+      <button id="b-three">3</button>
+      <button id="b-four">4</button>
+      <button id="b-five">5</button>
+      <button id="b-six">6</button>
+      <button id="b-seven">7</button>
+      <button id="b-eight">8</button>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="./client-vue.js"></script>
+</body>
+</html>

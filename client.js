@@ -5,16 +5,15 @@ $(function () {
   
   socket.on('on game', (data) => {
     gm = data
+    display()
   })
 
   function click(num){
-    display()
     if(isFinished){
       socket.emit('start game', null)
       return
     }
     socket.emit('select', num)
-    display()
   }
 
   function display(){
