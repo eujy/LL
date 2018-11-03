@@ -126,9 +126,9 @@ io.on('connection', (socket) => {
 
     if(phase === 'askWhichCard'){ // only for Heisi
       let chosenCard = null
-      for(let i in gm.cardList){
+      for(let i in gm.cardsInfo){
         if(msg === i){
-          chosenCard = gm.cardList[i]
+          chosenCard = gm.cardsInfo[i].card.name
           break
         }
       }

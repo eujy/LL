@@ -4,11 +4,11 @@ const CardEffects = require("./CardEffects")
 class GM extends CardEffects {
   constructor() {
     super()
-    this.cardList = ["Heisi","Doke","Kishi","Soryo","Majutusi","Shogun","Daijin","Hime"]
   }
 
   init(){
     this.players =[]
+    this.yama = []
     this.players.push(new Player("N"))
     this.players.push(new Player("R"))
     this.createDeck()
