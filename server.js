@@ -96,7 +96,7 @@ io.on('connection', (socket) => {
       return
     }
     let tempToWhom
-    if(phase === 3){ // ask to whom
+    if(phase === 3){ // ask to whom phase
       if(tempCard !== "Majutusi"){
         if(msg === gm.playingPlayer){
           return
@@ -114,6 +114,12 @@ io.on('connection', (socket) => {
           gm.endTurn(tempCard, tempToWhom, null)
           //TODO ターン終了処理？
         }
+      }
+    }
+
+    if(phase === 4){ // ask which card (for Heisi) phase
+      if(msg === 3){
+        
       }
     }
     //TODO ゲーム終了処理
