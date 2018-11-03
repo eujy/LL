@@ -73,7 +73,7 @@ class GM {
 
 
   endTurn(card,player,chosenCard){
-    this.doCard(card,player,chosenCard)
+    this.doCard(card,player,chosenCard, this.playingPlayer)
     if(this.countPlayers === 1){//残ってるプレーヤーが一人だったらゲーム終了
       this.gameFinished()
     }
@@ -109,6 +109,7 @@ class GM {
       if(this.players[player].holdCard[0].name === chosenCard){
         this.players[player].lose()
       }
+      return
     }
     if(card === "Doke"){//対象プレイヤーの手札を見る
       return this.players[player].holdCard[0];
@@ -121,17 +122,21 @@ class GM {
       }else{
 
       }
+      return
     }
     if(card === "Soryo"){
       this.player[me].isProtected = true
+      return
     }
     if(card === "Majutusi"){
       this.players[player].trshCard.push(this.players[player].holdCard[0])
       this.distribute(player)
+      return
     }
     if(card === "Shogun"){
       this.players[player].holdCard.push(this.players[me].holdCard[0])
       this.players[me].holdCard.push(this.players[player].holdCard[0])
+      return
     }
 
   }

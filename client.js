@@ -4,6 +4,7 @@ $(function () {
     let msg = $('#m').val()
 
     if(msg === 'display'){
+      socket.emit('display', null)
       $('#m').val('');
       return false;
     }
@@ -18,16 +19,16 @@ $(function () {
   })
 
   socket.on('display', (gm) => {
-    for(let player of gm.players){
-      for(let card of player.holdCard){
-        $(`#--ここをidに変える--`).append($('p').text(card.name))
+    for(let i in gm.players){
+      for(let card of gm.players[i].holdCard){
+        $(`#p${i}hold`).append($('<span>').text(card.name))
       }
-      for(let card of player.trshCard){
-        $(`#--ここをidに変える--`).append($('p').text(card.name))
+      for(let card of gm.players[i].trshCard){
+        $(`#p${i}trsh`).append($('<span>').text(card.name))
       }
     }
     for(let card of gm.yama){
-      $(`#--ここをidに変える--`).append($('p').text(card.name))
+      $(`#yama`).append($('<span>').text(card.name))
     }
   })
 

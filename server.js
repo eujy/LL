@@ -26,6 +26,7 @@ io.on('connection', (socket) => {
   io.sockets.emit('msg', 'ready?')
   let phase = 'init';// init, draw, choose, askToWhom, askWhichCard, endTurn, finishGame
   let tempCard = null
+  let tempToWhom = null
   socket.on('message', (msg) => {
     if(phase === 'init' && msg === "y"){
         gm.init()
@@ -99,7 +100,6 @@ io.on('connection', (socket) => {
       return
     }
 
-    let tempToWhom
     if(phase === 'askToWhom'){ // ask to whom phase
       if(tempCard !== "Majutusi"){
         if(msg === gm.playingPlayer){
@@ -144,11 +144,13 @@ io.on('connection', (socket) => {
   })
 
   socket.on('display', () => {
-    io.sockets.emit('display', {
+    let msg = {
       players: gm.players,
       yama: gm.yama,
-    })
+    }
+    io.sockets.emit('display', msg)
     console.log('display all')
+    console.log(msg)
   })
 
   socket.on('startTurn', () => {
