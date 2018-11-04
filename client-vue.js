@@ -1,4 +1,5 @@
 const socket = io('http://localhost:3000');
+
 let isFinished = true
 let gm = null
 let pp = null
@@ -7,23 +8,12 @@ let tempCardIdx = null
 let tempCardName = null
 let tempWhom = null
 
-class ClientManager {
-  constructor(){
-
+let you = new Vue({ 
+  el: '#you',
+  data: {
+      playerNum: '-'
   }
-
-  btHoldCards(){
-    
-  }
-  btToWhom(){
-
-  }
-  btWhichCard(){
-
-  }
-}
-
-const CM = new ClientManager()
+});
 
 let message = new Vue({ 
   el: '#message',
@@ -53,8 +43,8 @@ let myTrsh = new Vue({
   }
 })
 
-let p1Trsh = new Vue({ // TODO 汎用的にする
-  el: '#p1Trsh',
+let tekiTrsh = new Vue({ // TODO 汎用的にする
+  el: '#tekiTrsh',
   data: {
     cards: "default trushCards"
   }
@@ -69,13 +59,6 @@ let buttonField = new Vue({
   methods: {
     click1: function(event){
       clicks(1)
-      // display()
-      // if(isFinished){
-      //   socket.emit('start game', null)
-      //   return
-      // }
-      // socket.emit('select', 1)
-      this.value1 = 11
     },
     click2: function(event){
 
@@ -151,16 +134,16 @@ function receiveData(data){
 
 
 function display(){
+  dispName()
   dispYama()
   dispMine()
   dispOtherTrsh()
 
+  function dispName(){
+    you.playerNum = pp
+  }
   function dispYama(){
-    let msg = ''
-    for(let card of gm.yama){
-      msg += card.name
-    }
-    yama.message = msg
+    yama.cards = `${gm.yama.length} cards`
   }
   function dispMine(){
     let pp = gm.playingPlayer
@@ -185,7 +168,7 @@ function display(){
       for(let card of player.trshCard){
         msg += card.name
       }
-      p1Trsh.cards = msg //TODO 汎用的にする。
+      tekiTrsh.cards = msg //TODO 汎用的にする。
     }
   }
 }

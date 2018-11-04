@@ -28,19 +28,31 @@ class GameMethods {
 
   choose(player,cardIdx){
     this.players[player].trshCard.push(this.players[player].holdCard[cardIdx])
-    this.players[player].holdCard.splice(cardIdx,0)
-    console.log('choose', this.players[this.playingPlayer])
-    // return this.players[player].trshCard[0].name
+    this.players[player].holdCard.splice(cardIdx,1)
   }
 
   countPlayers(){
     var c = 0;
-    for(let v of this.players){
-      if(v.isAlive){
+    for(let player of this.players){
+      if(player.isAlive){
         c++;
       }
     }
     return c;
+  }
+
+  nextPlayer(){
+    this.playingPlayer++;
+    if(this.players.length === this.playingPlayer){
+      this.playingPlayer = 0;
+    }
+    //プレイヤーが生きている限り、順番を回す。
+    while (this.players[this.playingPlayer].isAlive === false) {
+      this.playingPlayer++;
+      if(this.players.length === this.playingPlayer){
+        this.playingPlayer = 0;
+      }
+  }
   }
 
 }

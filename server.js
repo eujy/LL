@@ -28,20 +28,26 @@ io.on('connection', (socket) => {
     gm.init()
     gm.startTurn()
     if(gm.isFinished){
+      console.log('game finish')
       io.sockets.emit('game finished', gm)
+      return
     }
     io.sockets.emit('on game', gm)
   })
 
   socket.on('select', (data) => {
-    console.log('select', data)
-    gm.endTurn(data.cardIdx, data.playedCard, data.whom, data.chosenCard)
+    console.log('select')
+    gm.endTurn(data.playedCardIdx, data.playedCard, data.whom, data.chosenCard)
     if(gm.isFinished){
+      console.log('game finish')
       io.sockets.emit('game finished', gm)
+      return
     }
     gm.startTurn()
     if(gm.isFinished){
+      console.log('game finish')
       io.sockets.emit('game finished', gm)
+      return
     }
     io.sockets.emit('on game', gm)
   })
