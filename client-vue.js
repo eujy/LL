@@ -2,20 +2,40 @@ const socket = io('http://localhost:3000');
 let isFinished = true
 let gm = null
 let pp = null
+let clickPhase = "first"
+let tempCardIdx = null
+let tempCardName = null
+let tempWhom = null
 
 class ClientManager {
   constructor(){
 
   }
 
+  btHoldCards(){
+    
+  }
+  btToWhom(){
+
+  }
+  btWhichCard(){
+
+  }
 }
 
 const CM = new ClientManager()
 
+let message = new Vue({ 
+  el: '#message',
+  data: {
+      message: 'default message'
+  }
+});
+
 let yama = new Vue({ 
   el: '#yama',
   data: {
-      message: 'default yama'
+      cards: 'default yama'
   }
 });
 
@@ -43,38 +63,91 @@ let p1Trsh = new Vue({ // TODO 汎用的にする
 let buttonField = new Vue({
   el: '#buttonField',
   data: {
-    value: "Start"
+    value1: "Start",
+    value2: "Start",
   },
   methods: {
     click1: function(event){
-      display()
-      if(isFinished){
-        socket.emit('start game', null)
-        return
-      }
-      socket.emit('select', 1)
-      this.value = gm.players[]
+      clicks(1)
+      // display()
+      // if(isFinished){
+      //   socket.emit('start game', null)
+      //   return
+      // }
+      // socket.emit('select', 1)
+      this.value1 = 11
     },
     click2: function(event){
-      display()
-      if(isFinished){
-        socket.emit('start game', null)
-        return
-      }
-      socket.emit('select', 1)
+
     },
   }
 })
 
+function clicks(num){
+  if(isFinished){
+    socket.emit('game start', null)
+    return
+  }
+  if(clickPhase === "first"){ //SELECT A CARD
+    let card = gm.players[pp].holdCard[num].name
+    for(let cardInfo of gm.cardsInfo){
+      if(cardInfo.action !== null && card === cardInfo.card.name){
+        tempCardIdx = num
+        tempCardName = card
+        clickPhase = "second"
+        message.message = "to whom?(f)"
+        return
+      }
+    }
+    socket.emit('select', {playedCardIdx: num, playedCard: card, whom: null, chosenCard: null})
+    message.message = "select a card(f)"
+    return
+  }
+  if(clickPhase === "second"){ //TO WHOM
+    if(tempCardName === "Heisi"){ //WARN 兵士以外も出てきた場合は修正
+      tempWhom = num
+      clickPhase = "third"
+      message.message = "which card?(s)"
+      return
+    }
+    socket.emit('select', {playedCardIdx: tempCardIdx, playedCard: tempCardName, whom: num, chosenCard: null})
+    resetTemp()
+    message.message = "select a card(s)"
+    return
+  }
+  if(clickPhase === "third"){ //WHICH CARD
+    socket.emit('select', {playedCardIdx: tempCardIdx, playedCard: tempCardName, whom: tempWhom, chosenCard: gm.cardList[num]})
+    resetTemp()
+    message.message = "select a card(t)"
+  }
+}
+
+function resetTemp(){
+  tempCardIdx = null
+  tempCardName = null
+  tempWhom = null
+  clickPhase = "first"
+}
 
 socket.on('on game', (data) => {
-  gm = data
+  isFinished = false
+  receiveData(data)
   display()
+  message.message = "select a card(og)"
 })
 
-socket.on('init', (data) => {
-  gm = data
+socket.on('game finished', (data) => {
+  isFinished = true
+  receiveData(data)
+  display()
+  message.message = "new game?"
 })
+
+function receiveData(data){
+  gm = data
+  pp = gm.playingPlayer
+  // isFinished = gm.isFinished
+}
 
 
 function display(){

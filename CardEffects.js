@@ -5,6 +5,7 @@ const Card = require("./Card")
 class CardEffects extends GameMethods {
   constructor(){
     super()
+    this.cardList =  null
     this.cardsInfo = [
       {"card": new Card(1, "Heisi"), "howmany": 5, "action": ["whom","card"]},
       {"card": new Card(2, "Doke"), "howmany": 2, "action": ["whom"]},
@@ -18,6 +19,7 @@ class CardEffects extends GameMethods {
   }
 
   createDeck(){
+    console.log('create deck');
     for(let cardInfo of this.cardsInfo){
       for(let i = 0; i < cardInfo.howmany; i++){
         this.yama.push(cardInfo.card)
@@ -25,29 +27,29 @@ class CardEffects extends GameMethods {
     }
   }
 
-  nextAction(card){
+  getNextAction(cardName){
     for(let cardInfo of this.cardsInfo){
-      if(card === cardInfo.card.name){
+      if(cardName === cardInfo.card.name){
         return cardInfo.action
       }
     }
   }
 
   getCardList(){
-    return this.cardsInfo.map(cardInfo => cardInfo.card.name)
+    this.cardList = this.cardsInfo.map(cardInfo => cardInfo.card.name)
   }
 
-  doCard(playedCard,whom,chosenCard,me){
-    if(card === "Heisi"){//対象プレイヤーとカードを選び、当たっていたら対象プレイヤーは脱落
-      if(this.players[whom].holdCard[0].name === chosenCard){
+  doCard(playedCardName,whom,chosenCardName,me){
+    if(playedCardName === "Heisi"){//対象プレイヤーとカードを選び、当たっていたら対象プレイヤーは脱落
+      if(this.players[whom].holdCard[0].name === chosenCardName){
         this.players[whom].lose()
       }
       return
     }
-    if(playedCard === "Doke"){//対象プレイヤーの手札を見る
+    if(playedCardName === "Doke"){//対象プレイヤーの手札を見る
       return this.players[whom].holdCard[0];
     }
-    if(playedCard === "Kishi"){//対象プレイヤーとカードの強さを比較して弱かったほうが脱落
+    if(playedCardName === "Kishi"){//対象プレイヤーとカードの強さを比較して弱かったほうが脱落
       if(this.players[whom].holdCard[0].power > this.players[me].holdCard[0].power){
         this.players[me].lose()
       }else if(this.players[whom].holdCard[0].power < this.players[me].holdCard[0].power){
@@ -57,16 +59,16 @@ class CardEffects extends GameMethods {
       }
       return
     }
-    if(playedCard === "Soryo"){
+    if(playedCardName === "Soryo"){
       this.player[me].isProtected = true
       return
     }
-    if(playedCard === "Majutusi"){
+    if(playedCardName === "Majutusi"){
       this.players[whom].trshCard.push(this.players[whom].holdCard[0])
       this.distribute(whom)
       return
     }
-    if(playedCard === "Shogun"){
+    if(playedCardName === "Shogun"){
       this.players[whom].holdCard.push(this.players[me].holdCard[0])
       this.players[me].holdCard.push(this.players[whom].holdCard[0])
       return

@@ -13,7 +13,7 @@
   <div class="split-boxtate ue-box">
     <div class="split-box left-box">
       <div id="wrap">
-        <div id="yama">yama: {{ message }}</div>
+        <div id="yama">yama: {{ cards }}</div>
         <div>
           <div id="myTrsh"><p>myTrsh: {{ cards }}</p></div>
           <div id="p1Trsh"><p>p1Trsh: {{ cards }}</p></div>
@@ -33,11 +33,11 @@
 
   <div class="split-boxtate shita-box">
     <p>
-      <div id="message">ここにメッセージが表示されます</div>
+      <div id="message">{{ message }}</div>
     </p>
     <div id="buttonField">
-      <button id="b-one" v-on:click="click1">{{ num }}</button>
-      <button id="b-two" v-on:click="click2">2</button>
+      <button id="b-one" v-on:click="click1">{{ value1 }}</button>
+      <button id="b-two" v-on:click="click2">{{ value2 }}</button>
       <button id="b-three">3</button>
       <button id="b-four">4</button>
       <button id="b-five">5</button>

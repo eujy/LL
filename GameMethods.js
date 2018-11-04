@@ -26,10 +26,11 @@ class GameMethods {
     this.yama.shift()
   }
 
-  choose(player,chosenCard){
-    this.players[player].trshCard.push(this.players[player].holdCard[chosenCard])
-    this.players[player].holdCard.splice(chosenCard,1)
-    return this.players[player].trshCard[0].name
+  choose(player,cardIdx){
+    this.players[player].trshCard.push(this.players[player].holdCard[cardIdx])
+    this.players[player].holdCard.splice(cardIdx,1)
+    console.log('choose', this.players[this.playingPlayer])
+    // return this.players[player].trshCard[0].name
   }
 
   countPlayers(){

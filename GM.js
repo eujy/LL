@@ -9,8 +9,12 @@ class GM extends CardEffects {
   init(){
     this.players =[]
     this.yama = []
+    this.isFinished = false
+    this.winner = null
+
     this.players.push(new Player("N"))
     this.players.push(new Player("R"))
+    this.getCardList()
     this.createDeck()
     this.shuffle(this.yama)
     for(let i in this.players){
@@ -24,8 +28,9 @@ class GM extends CardEffects {
     this.doDaijin()
   }
 
-  endTurn(card,player,chosenCard){
-    this.doCard(card,player,chosenCard, this.playingPlayer)
+  endTurn(cardIdx, cardName, player, chosenCardName,){
+    this.doCard(cardName,player,chosenCardName, this.playingPlayer)
+    this.choose(this.playingPlayer, cardIdx)
     if(this.countPlayers === 1){//残ってるプレーヤーが一人だったらゲーム終了
       this.gameFinished()
     }

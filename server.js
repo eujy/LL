@@ -23,23 +23,26 @@ io.on('connection', (socket) => {
     console.log(`${socket.id} disconnected`)
   })
 
-  gm.init()
-  io.sockets.emit('init', gm)
-
-  io.sockets.on('game start', () => {
+  socket.on('game start', () => {
     console.log('game start')
     gm.init()
     gm.startTurn()
     if(gm.isFinished){
-      io.sockets.on('game finished', gm)
+      io.sockets.emit('game finished', gm)
     }
     io.sockets.emit('on game', gm)
   })
 
-  io.sockets.on('select', (data) => {
+  socket.on('select', (data) => {
     console.log('select', data)
-    gm.endTurn(data.playedCard, data.whom, data.chosenCard)
+    gm.endTurn(data.cardIdx, data.playedCard, data.whom, data.chosenCard)
+    if(gm.isFinished){
+      io.sockets.emit('game finished', gm)
+    }
     gm.startTurn()
+    if(gm.isFinished){
+      io.sockets.emit('game finished', gm)
+    }
     io.sockets.emit('on game', gm)
   })
 
