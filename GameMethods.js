@@ -28,7 +28,7 @@ class GameMethods {
 
   choose(player,cardIdx){
     this.players[player].trshCard.push(this.players[player].holdCard[cardIdx])
-    this.players[player].holdCard.splice(cardIdx,1)
+    this.players[player].holdCard.splice(cardIdx,0)
     console.log('choose', this.players[this.playingPlayer])
     // return this.players[player].trshCard[0].name
   }
@@ -45,4 +45,4 @@ class GameMethods {
 
 }
 
-module.exports = GameMethods
+module.exports = GameMethods;

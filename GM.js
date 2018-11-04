@@ -1,5 +1,6 @@
 const Player = require('./Player');
 const CardEffects = require("./CardEffects")
+const Card = require("./Card")
 
 class GM extends CardEffects {
   constructor() {
@@ -17,6 +18,9 @@ class GM extends CardEffects {
     this.getCardList()
     this.createDeck()
     this.shuffle(this.yama)
+    for(let i in this.players){//ダミーカードをtrshに置いておく
+      this.players[i].trshCard.push(new Card(0,"dummy"));
+    }
     for(let i in this.players){
       this.distribute(i)
     }
@@ -38,8 +42,10 @@ class GM extends CardEffects {
       this.gameFinished()
     }
     for(let v of this.players){
-      if(v.trshCard.length > 0 && v.trshCard[v.trshCard.length-1].name === "Hime"){
-        v.lose()
+      if(v.trshCard.length > 0){
+        if (v.trshCard[v.trshCard.length-1].name === "Hime") {
+          v.lose()
+        }
       }
     }
     //プレイヤーが生きている限り、順番を回す。

@@ -60,7 +60,7 @@ class CardEffects extends GameMethods {
       return
     }
     if(playedCardName === "Soryo"){
-      this.player[me].isProtected = true
+      this.players[me].isProtected = true
       return
     }
     if(playedCardName === "Majutusi"){
