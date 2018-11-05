@@ -1,4 +1,3 @@
-const Player = require('./Player');
 const CardEffects = require("./CardEffects")
 // const Card = require("./Card")
 
@@ -8,13 +7,14 @@ class GM extends CardEffects {
   }
 
   init(){
-    this.players =[]
+    this.playingPlayer = 0
+    this.getIdList()
     this.yama = []
     this.isFinished = false
     this.winner = null
 
-    this.players.push(new Player("N"))
-    this.players.push(new Player("R"))
+    // this.players.push(new Player("N"))
+    // this.players.push(new Player("R"))
     this.getCardList()
     this.createDeck()
     this.shuffle(this.yama)
@@ -49,15 +49,6 @@ class GM extends CardEffects {
       this.gameFinished()
     }
     this.nextPlayer()
-  }
-
-  gameFinished(){
-    this.isFinished = true
-    for(let player of this.players){
-      if(player.isAlive){
-        this.winner = player.name
-      }
-    }
   }
 }
 

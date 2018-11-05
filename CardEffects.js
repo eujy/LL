@@ -65,6 +65,7 @@ class CardEffects extends GameMethods {
     }
     if(playedCardName === "Majutusi"){
       this.players[whom].trshCard.push(this.players[whom].holdCard[0])
+      this.players[whom].holdCard.splice(0,1)
       this.distribute(whom)
       return
     }

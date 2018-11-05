@@ -1,7 +1,7 @@
 class Player {
-  constructor(name) {
+  constructor(id) {
     this.points = 0;
-    this.name = name;
+    this.id = id;
     this.holdCard = [];
     this.trshCard = [];
     this.isAlive = true;

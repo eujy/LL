@@ -53,19 +53,44 @@ let tekiTrsh = new Vue({ // TODO 汎用的にする
 let buttonField = new Vue({
   el: '#buttonField',
   data: {
-    value1: "Start",
-    value2: "Start",
+    value1: "1",
+    value2: "2",
+    value3: "3",
+    value4: "4",
+    value5: "5",
+    value6: "6",
+    value7: "7",
+    value8: "8",
   },
   methods: {
     click1: function(event){
       clicks(1)
     },
     click2: function(event){
-      
+      clicks(2)
+    },
+    click3: function(event){
+      clicks(3)
+    },
+    click4: function(event){
+      clicks(4)
+    },
+    click5: function(event){
+      clicks(5)
+    },
+    click6: function(event){
+      clicks(6)
+    },
+    click7: function(event){
+      clicks(7)
+    },
+    click8: function(event){
+      clicks(8)
     },
   }
 })
 
+// Click時の処理は全部ここ
 function clicks(num){
   if(isFinished){
     socket.emit('game start', null)
@@ -140,7 +165,7 @@ function display(){
   dispOtherTrsh()
 
   function dispName(){
-    you.playerNum = pp
+    you.playerNum = gm.idList[socket.id]
   }
   function dispYama(){
     yama.cards = `${gm.yama.length} cards`
@@ -148,12 +173,12 @@ function display(){
   function dispMine(){
     let pp = gm.playingPlayer
     let msg = ''
-    for(let card of gm.players[pp].holdCard){
+    for(let card of gm.players[gm.idList[socket.id]].holdCard){
       msg += card.name
     }
     myHold.cards = msg
     msg = ''
-    for(let card of gm.players[pp].trshCard){
+    for(let card of gm.players[gm.idList[socket.id]].trshCard){
       msg += card.name
     }
     myTrsh.cards = msg
@@ -161,7 +186,7 @@ function display(){
   function dispOtherTrsh(){
     let pp = gm.playingPlayer
     for(let player of gm.players){
-      if(player.name === gm.players[pp].name){
+      if(player.name === gm.players[gm.idList[socket.id]].name){
         continue
       }
       let msg = ''

@@ -18,9 +18,12 @@ function withError (obj, err) {
 
 io.on('connection', (socket) => {
   console.log(`${socket.id} connected`)
+  gm.addPlayer(socket.id)
+  console.log(gm.players)
 
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`)
+    gm.removePlayer(socket.id)
   })
 
   socket.on('game start', () => {

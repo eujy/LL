@@ -1,10 +1,30 @@
+const Player = require('./Player');
+
 class GameMethods {
   constructor(){
     this.yama = [];
     this.players = [];
+    this.idList = {}
     this.isFinished = false;
-    this.playingPlayer = 0;
+    this.playingPlayer = null
     this.winner = null
+  }
+
+  addPlayer(id){
+    this.players.push(new Player(id))
+  }
+  removePlayer(id){
+    for(let i in this.players){
+      if(this.players[i].id === id){
+        this.players.splice(i,1)
+        break
+      }
+    }
+  }
+  getIdList(){
+    for(let i in this.players){
+      this.idList[this.players[i].id] = i
+    }
   }
 
   shuffle(array){
@@ -22,6 +42,7 @@ class GameMethods {
     if(player === null){
       player = this.playingPlayer
     }
+    console.log('distribute', this.players)
     this.players[player].holdCard.push(this.yama[0])
     this.yama.shift()
   }
@@ -52,9 +73,17 @@ class GameMethods {
       if(this.players.length === this.playingPlayer){
         this.playingPlayer = 0;
       }
-  }
+    }
   }
 
+  gameFinished(){
+    this.isFinished = true
+    for(let player of this.players){
+      if(player.isAlive){
+        this.winner = player.name
+      }
+    }
+  }
 }
 
 module.exports = GameMethods;
