@@ -8,21 +8,21 @@ let tempCardIdx = null
 let tempCardName = null
 let tempWhom = null
 
-let you = new Vue({ 
+let you = new Vue({
   el: '#you',
   data: {
       playerNum: '-'
   }
 });
 
-let message = new Vue({ 
+let message = new Vue({
   el: '#message',
   data: {
       message: 'default message'
   }
 });
 
-let yama = new Vue({ 
+let yama = new Vue({
   el: '#yama',
   data: {
       cards: 'default yama'
@@ -61,7 +61,7 @@ let buttonField = new Vue({
       clicks(1)
     },
     click2: function(event){
-
+      
     },
   }
 })
